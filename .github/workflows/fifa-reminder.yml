@@ -2,8 +2,8 @@ name: FIFA 2026 Match Reminder
 
 on:
   schedule:
-    # Every 15 minutes, but avoids :00, :15, :30, :45 high-load exact times
-    - cron: "3,18,33,48 * * * *"
+    # Every hour at minute 17 UTC
+    - cron: "17 * * * *"
 
   workflow_dispatch:
 
@@ -31,5 +31,5 @@ jobs:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           NTFY_SERVER: https://ntfy.sh
           REMIND_BEFORE_MINUTES: "30"
-          CHECK_WINDOW_MINUTES: "30"
+          CHECK_WINDOW_MINUTES: "70"
         run: python fifa_reminder_cloud.py

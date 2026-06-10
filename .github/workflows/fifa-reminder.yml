@@ -2,9 +2,8 @@ name: FIFA 2026 Match Reminder
 
 on:
   schedule:
-    # Every 15 minutes.
-    # GitHub cron uses UTC time.
-    - cron: "*/15 * * * *"
+    # Every 15 minutes, but avoids :00, :15, :30, :45 high-load exact times
+    - cron: "3,18,33,48 * * * *"
 
   workflow_dispatch:
 

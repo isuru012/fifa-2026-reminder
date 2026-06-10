@@ -37,3 +37,5 @@ ms-playwright/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+start_fifa_listener.bat

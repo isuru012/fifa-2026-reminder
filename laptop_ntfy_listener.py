@@ -1,13 +1,19 @@
 import json
+import os
 import time
 import requests
 from winotify import Notification, audio
 
 
-import os
-
 NTFY_SERVER = os.getenv("NTFY_SERVER", "https://ntfy.sh")
 NTFY_TOPIC = os.getenv("NTFY_TOPIC")
+
+LOG_FILE = "listener.log"
+
+
+def log(message):
+    with open(LOG_FILE, "a", encoding="utf-8") as f:
+        f.write(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {message}\n")
 
 
 def show_windows_notification(title, message):
@@ -22,14 +28,14 @@ def show_windows_notification(title, message):
 
 
 def listen_forever():
-    
     if not NTFY_TOPIC:
         raise RuntimeError("Missing NTFY_TOPIC environment variable.")
-    
+
     url = f"{NTFY_SERVER.rstrip('/')}/{NTFY_TOPIC}/json"
+
     while True:
         try:
-            print(f"Listening for FIFA reminders: {url}")
+            log(f"Listening: {url}")
 
             with requests.get(url, stream=True, timeout=90) as response:
                 response.raise_for_status()
@@ -49,11 +55,12 @@ def listen_forever():
                     title = event.get("title", "FIFA 2026 Reminder")
                     message = event.get("message", "")
 
+                    log(f"Notification received: {title}")
                     show_windows_notification(title, message)
 
         except Exception as e:
-            print(f"Error: {e}")
-            print("Reconnecting in 10 seconds...")
+            log(f"Error: {e}")
+            log("Reconnecting in 10 seconds...")
             time.sleep(10)
 
 

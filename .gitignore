@@ -39,3 +39,5 @@ Thumbs.db
 desktop.ini
 
 start_fifa_listener.bat
+start_fifa_listener_debug.bat
+listener.log

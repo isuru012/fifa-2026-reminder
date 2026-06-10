@@ -1,0 +1,36 @@
+name: FIFA 2026 Match Reminder
+
+on:
+  schedule:
+    # Every 15 minutes.
+    # GitHub cron uses UTC time.
+    - cron: "*/15 * * * *"
+
+  workflow_dispatch:
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python packages
+        run: pip install -r requirements.txt
+
+      - name: Install Playwright browser
+        run: python -m playwright install chromium
+
+      - name: Run FIFA reminder checker
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          NTFY_SERVER: https://ntfy.sh
+          REMIND_BEFORE_MINUTES: "30"
+          CHECK_WINDOW_MINUTES: "15"
+        run: python fifa_reminder_cloud.py

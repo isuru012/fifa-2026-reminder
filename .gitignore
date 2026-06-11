@@ -27,7 +27,6 @@ ms-playwright/
 *.log
 
 # Local test/output files
-*.json
 *.csv
 
 # VS Code personal settings
@@ -41,3 +40,19 @@ desktop.ini
 start_fifa_listener.bat
 start_fifa_listener_debug.bat
 listener.log
+Access keys.txt
+fifa-reminder-admin_credentials.csv
+fifa-reminder-admin_accessKeys.csv
+
+# AWS / local credentials
+.aws/
+
+# Local Windows startup scripts
+*.bat
+*.vbs
+
+# Local private notes
+*key*
+*Key*
+*credential*
+*Credential*
